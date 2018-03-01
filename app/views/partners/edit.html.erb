@@ -1,0 +1,8 @@
+<%= javascript_include_tag "partner/partner", plugin: :openproject_partners_plugin %>
+
+<% breadcrumb_paths(default_breadcrumb, @partner.partner_id) %>
+<%= toolbar title: @partner.name %>
+
+<%= render :partial => 'form' %>
+
+<% html_title "#{t(:label_partner_plural)} - #{@partner.name}" %>

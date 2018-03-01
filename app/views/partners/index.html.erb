@@ -1,0 +1,74 @@
+<% html_title t(:label_partner_plural) -%>
+<% breadcrumb_paths(link_to(l(:label_administration), controller: '/admin'), link_to(l(:label_partner_plural), controller: '/partners')) %>
+
+<%= toolbar title: t(:label_partner_plural) do %>
+  <% if User.current.allowed_to?(:add_partner, nil, :global => true) %>
+    <li class="toolbar-item">
+      <%= link_to new_partner_path, :class => 'button -alt-highlight' do %>
+        <%= op_icon('button--icon icon-add') %>
+        <span class="button--text"><%= t(:label_partner)  %></span>
+      <% end %>
+    </li>
+  <% end %>
+  <%= call_hook(:partner_admin_action_menu) %>
+<% end %>
+
+<div class="generic-table--container">
+  <div class="generic-table--results-container">
+    <table class="generic-table">
+      <colgroup>
+        <% (1..3).each do |_| %>
+          <col highlight-col>
+        <% end %>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>
+            <div class="generic-table--header-outer">
+              <div class="generic-table--header">
+                <%= Partner.human_attribute_name :partner_id %>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="generic-table--header-outer">
+              <div class="generic-table--header">
+                <%= Partner.human_attribute_name :name %>
+              </div>
+            </div>
+          </th>
+
+
+
+          <% if User.current.allowed_to?(:edit_partner, nil, :global => true) %>
+            <th>
+              <div class="generic-table--empty-header"></div>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @partners.each do |partner| %>
+          <tr class="<%= cycle("odd", "even") %>">
+            <td class="name center"><%= link_to partner.partner_id, partner %></td>
+            <td><%= partner.name %></td>
+            <% if User.current.allowed_to?(:edit_partner, nil, :global => true) %>
+              <td class="buttons">
+                <%= link_to "", edit_partner_path(partner), class: 'icon icon-edit' %>
+                <%=
+                  link_to(
+                    "",
+                    partner,
+                    method: :delete,
+                    class: 'icon icon-delete',
+                    data: { confirm: t(:text_are_you_sure) }
+                  )
+                %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

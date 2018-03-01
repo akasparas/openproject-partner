@@ -1,0 +1,20 @@
+<%= error_messages_for 'partner' %>
+
+<%= form_for @partner, :builder => TabularFormBuilder, :html => {:multipart => true} do |f| %>
+
+  <section class="form--section">
+    <div class="form--field -required"><%= f.text_field :partner_id, :required => true, container_class: '-wide' %></div>
+    <div class="form--field -required"><%= f.text_field :name, :required => true, container_class: '-wide' %></div>
+
+
+  </section>
+
+  <%= styled_button_tag l(@partner.new_record? ? :button_create : :button_save), class: '-highlight -with-icon icon-checkmark' %>
+
+<% end %>
+
+<% unless @partner.new_record? %>
+
+  <div style="clear: both;"></div>
+
+<% end %>

@@ -1,0 +1,28 @@
+en:
+  field_short_description: "Short description"
+  field_logo: "Logo"
+  field_url: "Website url"
+
+  label_partner: "Partner"
+  label_partner_plural: "Partners"
+  label_partner_new: "New partner"
+  label_additional_data: "Additional Data"
+
+  label_member_filter: "Filter members by name"
+
+  label_partners_settings_intro: "You may specify two texts that will be shown on the partners index page: one of them above the partners table and the other one below it."
+
+  notice_save_before_clicking: "(Save before clicking on this link)"
+  notice_partner_deleted: "Partner deleted"
+  notice_partner_member_added: "Member added"
+  notice_partner_member_deleted: "Member removed"
+  notice_partner_set_success: "Partner set"
+  notice_partner_not_set: "Partner NOT set"
+  partner:
+    partner_settings: "Partner"
+
+  activerecord:
+    models:
+      partner:
+        one: "Partner"
+        other: "Partners"

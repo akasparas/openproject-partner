@@ -1,0 +1,23 @@
+<h4>Partner settings</h4>
+
+<%
+  project = @project
+%>
+<%= labelled_tabular_form_for @project,
+                              url: url_for( controller: 'partners', action: 'set_partner', project_id: @project),
+                              method: :put do |form| %>
+    <div class="form--field">
+        <% if project && project.persisted? %>
+            <% partner = project.partner.nil? ? [t('label_none_parentheses'), -1] : [project.partner.name, project.partner.id]
+                options = { :'data-ajaxURL' => url_for({controller: "/partners"}),
+                            :'data-projectId' => project.id,
+                            :'data-selected' => [partner].to_json
+                        }
+            %>
+            <%= javascript_include_tag "autocompleter.js" %>
+            <%= javascript_include_tag "project/partner_attribute.js" %>
+            <%= form.select(:partner_id, options_for_select([]), {container_class: '-wide'}, options) %>
+        <% end %>
+    </div>
+    <%= form.button l(:button_save), class: 'button -highlight -with-icon icon-checkmark' %>
+<% end %>

@@ -1,0 +1,32 @@
+<% html_title "#{t(:label_partner)} - #{@partner.name}" %>
+<% breadcrumb_paths(link_to(l(:label_administration), controller: '/admin'), link_to(l(:label_partner_plural), controller: '/partners'), @partner.name) %>
+
+<%= toolbar title: @partner.name do %>
+  <% if User.current.allowed_to?(:edit_partner, nil, :global => true) %>
+    <li class="toolbar-item">
+      <%= link_to edit_partner_path(@partner), :class => 'button' do %>
+        <%= op_icon('button--icon icon-edit') %>
+        <span class="button--text"><%= t(:label_edit) %></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if User.current.allowed_to?(:add_partner, nil, :global => true) %>
+    <li class="toolbar-item">
+      <%= link_to new_partner_path, :class => 'button -alt-highlight' do %>
+        <%= op_icon('button--icon icon-add') %>
+        <span class="button--text"><%= t(:label_partner)  %></span>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>
+
+<h3><%= @partner.name %></h3>
+
+<div class="grid-block -no-outer-padding">
+
+
+</div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'partner/partner', plugin: 'openproject_partner' %>
+<% end %>
