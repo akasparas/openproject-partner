@@ -1,0 +1,48 @@
+<% html_title "#{t(:label_contact)} - #{@contact.name}" %>
+<% breadcrumb_paths(link_to(l(:label_administration), controller: '/admin'), link_to(l(:label_contact_plural), controller: '/contacts'), @contact.name) %>
+
+<%= toolbar title: @contact.name do %>
+  <% if User.current.allowed_to?(:edit_contact, nil, :global => true) %>
+    <li class="toolbar-item">
+      <%= link_to edit_contact_path(@contact), :class => 'button' do %>
+        <%= op_icon('button--icon icon-edit') %>
+        <span class="button--text"><%= t(:label_edit) %></span>
+      <% end %>
+    </li>
+  <% end %>
+  <% if User.current.allowed_to?(:add_contact, nil, :global => true) %>
+    <li class="toolbar-item">
+      <%= link_to new_contact_path, :class => 'button -alt-highlight' do %>
+        <%= op_icon('button--icon icon-add') %>
+        <span class="button--text"><%= t(:label_contact)  %></span>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>
+
+<h3><%= @contact.name %></h3>
+
+<div class="grid-block -no-outer-padding">
+  <div class="form--field">
+      <label class="form--label">
+        <b><%= t(:label_phone) %></b>
+      </label>
+      <span class="form--field-container">
+        <% if @contact.phone %>
+          <a href="tel:<%= @contact.phone %>"><%= @contact.phone %></a>
+        <% end %>
+      </span>
+  </div>
+  <div class="form--field">
+      <label class="form--label">
+        <b><%= t(:label_email) %></b>
+      </label>
+      <span class="form--field-container">
+        <% if @contact.email %>
+          <a href="mailto:<%= @contact.email %>"><%= @contact.email %></a>
+        <% end %>
+      </span>
+  </div>
+
+</div>
+

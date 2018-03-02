@@ -1,0 +1,6 @@
+<% breadcrumb_paths(default_breadcrumb, @contact.name) %>
+<%= toolbar title: @contact.name %>
+
+<%= render :partial => 'form' %>
+
+<% html_title "#{t(:label_contact_plural)} - #{@contact.name}" %>

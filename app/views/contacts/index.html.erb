@@ -1,0 +1,82 @@
+<% html_title t(:label_contact_plural) -%>
+<% breadcrumb_paths(link_to(l(:label_administration), controller: '/admin'), link_to(l(:label_contact_plural), controller: '/contacts')) %>
+
+<%= toolbar title: t(:label_contact_plural) do %>
+  <% if User.current.allowed_to?(:add_contact, nil, :global => true) %>
+    <li class="toolbar-item">
+      <%= link_to new_contact_path, :class => 'button -alt-highlight' do %>
+        <%= op_icon('button--icon icon-add') %>
+        <span class="button--text"><%= t(:label_contact)  %></span>
+      <% end %>
+    </li>
+  <% end %>
+  <%= call_hook(:contact_admin_action_menu) %>
+<% end %>
+
+<div class="generic-table--container">
+  <div class="generic-table--results-container">
+    <table class="generic-table">
+      <colgroup>
+        <% (1..4).each do |_| %>
+          <col highlight-col>
+        <% end %>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>
+            <div class="generic-table--header-outer">
+              <div class="generic-table--header">
+                <%= Contact.human_attribute_name :name %>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="generic-table--header-outer">
+              <div class="generic-table--header">
+                <%= Contact.human_attribute_name :phone %>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="generic-table--header-outer">
+              <div class="generic-table--header">
+                <%= Contact.human_attribute_name :email %>
+              </div>
+            </div>
+          </th>
+
+
+
+          <% if User.current.allowed_to?(:edit_contact, nil, :global => true) %>
+            <th>
+              <div class="generic-table--empty-header"></div>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @contacts.each do |contact| %>
+          <tr class="<%= cycle("odd", "even") %>">
+            <td class="name center"><%= link_to contact.name, contact %></td>
+            <td><%= contact.phone %></td>
+            <td><%= contact.email %></td>
+            <% if User.current.allowed_to?(:edit_contact, nil, :global => true) %>
+              <td class="buttons">
+                <%= link_to "", edit_contact_path(contact), class: 'icon icon-edit' %>
+                <%=
+                  link_to(
+                    "",
+                    contact,
+                    method: :delete,
+                    class: 'icon icon-delete',
+                    data: { confirm: t(:text_are_you_sure) }
+                  )
+                %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

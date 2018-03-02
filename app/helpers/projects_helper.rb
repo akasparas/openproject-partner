@@ -18,14 +18,6 @@ module ProjectsHelper
   #   s.join.html_safe
   # end
 
-  def partners_path
-    '/qq'
-  end 
-  
-  def partner_path
-    '/ww'
-  end 
-  
   private
 
   def logo_url(logo)

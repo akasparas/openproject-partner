@@ -6,7 +6,12 @@ en:
   label_partner: "Partner"
   label_partner_plural: "Partners"
   label_partner_new: "New partner"
+  label_contact: "Contact"
+  label_contact_plural: "Contacts"
+  label_contact_new: "New contact"
   label_additional_data: "Additional Data"
+  label_phone: "Phone"
+  label_email: "E-Mail"
 
   label_member_filter: "Filter members by name"
 
@@ -18,6 +23,7 @@ en:
   notice_partner_member_deleted: "Member removed"
   notice_partner_set_success: "Partner set"
   notice_partner_not_set: "Partner NOT set"
+  notice_contact_deleted: "Contact deleted"
   partner:
     partner_settings: "Partner"
 
@@ -26,3 +32,6 @@ en:
       partner:
         one: "Partner"
         other: "Partners"
+      contact:
+        one: "Contact"
+        other: "Contacts"

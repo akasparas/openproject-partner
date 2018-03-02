@@ -36,6 +36,16 @@ module OpenProject
             caption: 'Partners',
             icon: 'icon2 icon-backlogs'
 
+        menu :admin_menu,
+            :contacts,
+            {
+              controller: 'contacts' #,
+              #action: 'plugin',
+              #id: 'openproject_partner'
+            },
+            caption: 'Contacts',
+            icon: 'icon2 icon-backlogs'
+
       end
 
       patches [
