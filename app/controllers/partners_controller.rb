@@ -184,7 +184,12 @@ class PartnersController < ApplicationController
   end
 
   def available_contacts
-    @contacts = Contact.joins("LEFT JOIN contacts_partners ON contacts_partners.contact_id = contacts.id and contacts_partners.partner_id = '#{request.params[:id]}'").  # TODO SQL injection!!!
+    id = request.params[:id].gsub(/[^0-9a-zA-Z .,@ąčęėįšųūžAČĘĖĮŠŲŽ]/, "")
+    # no SQL injection here because 
+    # 1) get_partner_by_identifier is called and project by :id is found
+    # 2) project_id length is very limited
+    # 3) supplied parameter is sanitized
+    @contacts = Contact.joins("LEFT JOIN contacts_partners ON contacts_partners.contact_id = contacts.id and contacts_partners.partner_id = '#{id}'").
       where('contacts_partners.partner_id is null and (lower(contacts.name) like :q or contacts.phone like :q or lower(contacts.email) like :q)', 
         q: "%#{request.params[:q].downcase}%").
       order(name: :asc)
