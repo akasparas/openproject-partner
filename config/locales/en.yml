@@ -14,6 +14,10 @@ en:
   label_email: "E-Mail"
 
   label_member_filter: "Filter members by name"
+  label_associated_with_partners: "Associated with partners"
+  label_associated_with_contacts: "Associated with contacts"
+  label_no_associated_contacts: "No associated contacts"
+  label_no_associated_partners: "No associated partners"
 
   label_partners_settings_intro: "You may specify two texts that will be shown on the partners index page: one of them above the partners table and the other one below it."
 
@@ -24,6 +28,8 @@ en:
   notice_partner_set_success: "Partner set"
   notice_partner_not_set: "Partner NOT set"
   notice_contact_deleted: "Contact deleted"
+  notice_association_added: "Association added"
+  notice_association_removed: "Association removed"
   partner:
     partner_settings: "Partner"
 

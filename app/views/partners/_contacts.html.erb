@@ -1,0 +1,56 @@
+<!-- div class="grid-block -no-outer-padding" -->
+  <div class="grid-content medium-6 small-6">
+    <% if @contacts.any? %>
+      <fieldset class="form--fieldset">
+        <legend class="form--fieldset-legend"><%= l(:label_associated_with_contacts) %></legend>
+        <div class="generic-table--container">
+          <div class="generic-table--results-container">
+            <table class="generic-table list partners">
+              <tbody>
+                <% @contacts.each do |contact| %>
+                  <% next if @partner.new_record? %>
+                  <tr id="contact-<%= contact.id %>" class="contact">
+                    <td class="contact -no-padding-left"><%= contact.name %></td>
+                    <td class="buttons">
+                      <%=
+                        link_to "",
+                                delete_partner_contact_path(id: contact, partner_id: @partner.partner_id),
+                                method: :post,
+                                title: t(:button_delete),
+                                class: 'icon icon-delete'
+                      %>
+                    </td>
+                  </tr>
+                <% end; reset_cycle %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </fieldset>
+    <% else %>
+        <%= no_results_box custom_title: t(:notice_no_associated_contacts) %>
+    <% end %>
+  </div>
+<% if true %>
+<h4>Associate contact</h4>
+
+<%= labelled_tabular_form_for @partner,
+                              url: add_contact_partner_path(id: @partner),
+                              method: :post do |form| %>
+    <div class="form--field">
+        <% if @partner && @partner.persisted? %>
+            <% partner = [t('label_none_parentheses'), -1]
+                options = { :'data-ajaxURL' => url_for({action: 'available_contacts', id: @partner}),
+                            :'data-contactId' => @partner.id,
+                            :'data-selected' => [partner].to_json
+                        }
+            %>
+            <%= javascript_include_tag "autocompleter.js" %>
+            <%= javascript_include_tag "partner/contact_attribute.js" %>
+            <%= form.select(:new_contact, options_for_select([]), {container_class: '-wide'}, options) %>
+        <% end %>
+    </div>
+    <%= form.button l(:button_add), class: 'button -highlight -with-icon icon-checkmark' %>
+<% end %>
+<% end %>
+<!-- /div -->

@@ -15,19 +15,21 @@ OpenProject::Application.routes.draw do
     member do
       get :filter_available_members
 
-      post 'delete_member/:member_id', to: 'partners#delete_member', as: 'delete_member'
-      post :add_members
+      post :add_contact
 
       put :set_partner
 
     end
 
-    #put '/partners/set_partner/:project_id', to: 'partners#set_partner'
-
   end
 
   resources :contacts do
     member do
+      post 'delete_partner/:partner_id', to: 'contacts#delete_partner', as: 'delete_partner'
+      post :add_partner
+
+      get :available_partners
+
     end 
   end
 

@@ -53,7 +53,7 @@ module OpenProject
         :ProjectsHelper
       ]
       
-      assets %w(project/partner_attribute.js)
+      assets %w(project/partner_attribute.js contact/partner_attribute.js partner/contact_attribute.js)
 
     end
   end

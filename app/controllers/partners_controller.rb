@@ -1,9 +1,7 @@
 class PartnersController < ApplicationController
   before_action :require_admin, except: [:index, :show]
   before_action :get_partner_by_identifier, except: [:index, :new, :create, :set_partner]
-  # before_filter :get_members, only: [:edit, :update, :show]
-  # before_filter :get_projects, only: [:edit, :update]
-  # before_filter :get_settings
+  before_action :get_contacts, only: [:edit, :update, :show]
   respond_to :html, :json
 
   helper :projects #, :custom_fields
@@ -170,5 +168,34 @@ class PartnersController < ApplicationController
   end
 
   def partners_path
+  end
+
+  def add_contact
+    contact  = Contact.find(request.params[:partner][:new_contact])
+    partner = Partner.find(request.params[:id])
+    if (contact && partner)
+      contact.partners << partner
+      flash[:notice] = t(:notice_association_added)
+      redirect_back(fallback_location: partners_url)
+    end
+  rescue => error
+    puts error.inspect
+    render_404
+  end
+
+  def available_contacts
+    @contacts = Contact.joins("LEFT JOIN contacts_partners ON contacts_partners.contact_id = contacts.id and contacts_partners.partner_id = '#{request.params[:id]}'").  # TODO SQL injection!!!
+      where('contacts_partners.partner_id is null and (lower(contacts.name) like :q or contacts.phone like :q or lower(contacts.email) like :q)', 
+        q: "%#{request.params[:q].downcase}%").
+      order(name: :asc)
+    respond_to do |format|
+      format.any(:json) { render request.format.to_sym => { results: { items: @contacts } } }
+    end
+
+  end
+
+  def get_contacts
+    @contacts = @partner.contacts.sorted_alphabetically
+    @available_contacts = Contact.sorted_alphabetically.limit(100) - @contacts
   end
 end

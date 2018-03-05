@@ -44,6 +44,13 @@
               </div>
             </div>
           </th>
+          <th>
+            <div class="generic-table--header-outer">
+              <div class="generic-table--header">
+                <%= Contact.human_attribute_name :partner %>
+              </div>
+            </div>
+          </th>
 
 
 
@@ -60,6 +67,7 @@
             <td class="name center"><%= link_to contact.name, contact %></td>
             <td><%= contact.phone %></td>
             <td><%= contact.email %></td>
+            <td><%= contact.partner_ids.count > 0 ? contact.partner_ids.join(',') : '-' %></td>
             <% if User.current.allowed_to?(:edit_contact, nil, :global => true) %>
               <td class="buttons">
                 <%= link_to "", edit_contact_path(contact), class: 'icon icon-edit' %>
